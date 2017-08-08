@@ -52,7 +52,6 @@
                 }
             }
         }
-
     }
     public ZipWriter zipWriter;//= new ZipWriter("temp.zip");
     private void AddMediaItemToZip(MediaItem mediaItem)

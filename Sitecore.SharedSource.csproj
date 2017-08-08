@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Automation-Dashboard.aspx" />
+    <Content Include="BulkDatasourceUpdate.aspx" />
     <Content Include="BulkDelete.aspx" />
     <Content Include="BulkPublish-cn.aspx" />
     <Content Include="BulkPublish.aspx" />
@@ -87,6 +88,7 @@
     <Content Include="LanguageReportV2.aspx" />
     <Content Include="LanguageReport.aspx" />
     <Content Include="PageCount.aspx" />
+    <Content Include="PagesUpdated.aspx" />
     <Content Include="TempUpdate.aspx" />
     <Content Include="UnlockItem.aspx" />
     <Content Include="GetKeywordReferenceItems.aspx" />
