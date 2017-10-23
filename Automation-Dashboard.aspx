@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true"  %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" %>
 
 <!DOCTYPE html>
 
@@ -19,15 +19,13 @@
     <link href="css/style.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
 
 
     <!-- Template js -->
     <script src="js/jquery-2.1.1.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="js/jquery.appear.js"></script>
-    <script src="js/contact_me.js"></script>
-    <script src="js/jqBootstrapValidation.js"></script>
     <script src="js/modernizr.custom.js"></script>
     <script src="js/script.js"></script>
 
@@ -41,7 +39,7 @@
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (Sitecore.Context.User.IsAuthenticated == false)
+            if (Sitecore.Context.User.IsAdministrator == false)
             {
                 Response.Redirect("login.aspx?returnUrl=Automation-Dashboard.aspx");
             }
@@ -72,13 +70,13 @@
                 <div class="row">
 
                     <div class="col-md-3">
-
-                        <div class="menu-item blue">
-                            <a href="bulkupdate.aspx">
-                                <i class="fa fa-pencil-square-o"></i>
-                                <p>Bulk Update</p>
+                        <div class="menu-item light-red">
+                            <a href="exportitem.aspx">
+                                <i class="fa fa-cloud-download"></i>
+                                <p>Export Sitecore Items</p>
                             </a>
                         </div>
+
 
                         <div class="menu-item light-orange">
                             <a href="bulkdelete.aspx">
@@ -99,10 +97,10 @@
 
                     <div class="col-md-3">
 
-                        <div class="menu-item green">
-                            <a href="bulkpublish.aspx">
-                                <i class="fa fa-globe"></i>
-                                <p>Bulk Publish</p>
+                        <div class="menu-item blue">
+                            <a href="bulkupdate.aspx">
+                                <i class="fa fa-pencil-square-o"></i>
+                                <p>Bulk Update</p>
                             </a>
                         </div>
 
@@ -124,10 +122,10 @@
 
                     <div class="col-md-3">
 
-                        <div class="menu-item light-red">
-                            <a href="exportitem.aspx">
-                                <i class="fa fa-cloud-download"></i>
-                                <p>Export Sitecore Items</p>
+                        <div class="menu-item green">
+                            <a href="bulkpublish.aspx">
+                                <i class="fa fa-globe"></i>
+                                <p>Bulk Publish</p>
                             </a>
                         </div>
 
@@ -146,14 +144,62 @@
                         </div>
 
                     </div>
-                      <div class="col-md-3">
+                    <div class="col-md-3">
+
+                        <div class="menu-item light-orange">
+                            <a href="bulkpublish-cn.aspx">
+                                <i class="fa fa-globe"></i>
+                                <p>Bulk Publish China</p>
+                            </a>
+                        </div>
+
+
+
+                        <div class="menu-item red">
+                            <a href="DeleteMultipleItems.aspx">
+                                <i class="fa fa-trash"></i>
+                                <p>Delete Multiple Items</p>
+                            </a>
+                        </div>
+                        <div class="menu-item blue">
+                            <a href="BulkDatasourceUpdate.aspx">
+                                <i class="fa fa-trash"></i>
+                                <p>Bulk Datasource Update</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
                         <div class="menu-item color">
                             <a href="pagecount.aspx">
                                 <i class="fa fa-cloud-download"></i>
                                 <p>Page Count</p>
                             </a>
-                        </div>                      
+                        </div>
 
+                    </div>
+                    <div class="col-md-3">
+                        <div class="menu-item red">
+                            <a href="LanguageReportV2.aspx">
+                                <i class="fa fa-files-o"></i>
+                                <p>Language Report V2</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="menu-item blue">
+                            <a href="getkeywordreferenceitems.aspx">
+                                <i class="fa fa-check"></i>
+                                <p>Get Keyword Reference Items</p>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="menu-item light-orange">
+                            <a href="getreferenceitems.aspx">
+                                <i class="fa fa-check"></i>
+                                <p>Get Linked Reference Items</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
