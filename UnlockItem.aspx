@@ -177,6 +177,11 @@
                         <asp:ListItem Value="sv">Swedish</asp:ListItem>
                         <asp:ListItem Value="uk">Ukrainian</asp:ListItem>
                         <asp:ListItem Value="zh-CN">Chinese</asp:ListItem>
+						<asp:ListItem Value="hu">Hungarian</asp:ListItem>             
+						<asp:ListItem Value="da">Danish</asp:ListItem>             
+						<asp:ListItem Value="ro">Romanian</asp:ListItem>             
+						<asp:ListItem Value="no">Norwegian</asp:ListItem>             
+						<asp:ListItem Value="fi">Finnish</asp:ListItem>
                     </asp:CheckBoxList>
                 </td>
             </tr>

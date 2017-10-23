@@ -79,6 +79,7 @@
     <Content Include="BulkPublish.aspx" />
     <Content Include="BulkTemplateChange.aspx" />
     <Content Include="BulkUpdate.aspx" />
+    <Content Include="DeleteMultipleItems.aspx" />
     <Content Include="ExportItem.aspx" />
     <Content Include="FieldCopier-Language.aspx" />
     <Content Include="FieldCopier.aspx" />

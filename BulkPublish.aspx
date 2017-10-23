@@ -62,8 +62,16 @@
             base.OnLoad(e);
             if (Sitecore.Context.User.IsAuthenticated == false)
             {
-                Response.Redirect("login.aspx?returnUrl=bulkdelete.aspx");
+                Response.Redirect("login.aspx?returnUrl=bulkpublish.aspx");
             }
+        }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            chkall.Attributes.Add("onchange", "javascript: Selectall();");
+            chkBoxSelectAllCore.Attributes.Add("onchange", "javascript: SelectallCore();");
+            chkBoxSelectAllOthers.Attributes.Add("onchange", "javascript: SelectallOthers();");
+            chkBoxSelectAllNewLanguages.Attributes.Add("onchange", "javascript: SelectallNewLanguages();");
         }
 
         private void PublishItem(Sitecore.Data.Items.Item item, bool isSubitem, string DB, string lang)
@@ -108,11 +116,30 @@
                 {
                     Item i = db.GetItem(ii);
                     if (i == null || i.ID.ToString() == "{F344DBE2-BC34-49FB-8564-FD74048702D9}") { sb.Append("Item not found: " + ii).Append("<br/>"); continue; }
-                    foreach (ListItem lang in chkLang.Items)
+                    foreach (ListItem lang in chkLangCore.Items)
                     {
                         if (lang.Selected)
                         {
                             PublishItem(i, isSubitem, DB, lang.Value);
+                            sb.Append("Item published:").Append(i.ID).Append("Language: ").Append(lang.Value).Append("<br/>");
+                            Sitecore.Diagnostics.Log.Info("Item Published Using Tool - Language: " + lang.Value, this);
+                        }
+                    }
+                    foreach (ListItem lang in chklangOthers.Items)
+                    {
+                        if (lang.Selected)
+                        {
+                            PublishItem(i, isSubitem, DB, lang.Value);
+                            Sitecore.Diagnostics.Log.Info("Item Published Using Tool - Language: " + lang.Value, this);
+                            sb.Append("Item published:").Append(i.ID).Append("Language: ").Append(lang.Value).Append("<br/>");
+                        }
+                    }
+                    foreach (ListItem lang in chkNewLanguages.Items)
+                    {
+                        if (lang.Selected)
+                        {
+                            PublishItem(i, isSubitem, DB, lang.Value);
+                            Sitecore.Diagnostics.Log.Info("Item Published Using Tool - Language: " + lang.Value, this);
                             sb.Append("Item published:").Append(i.ID).Append("Language: ").Append(lang.Value).Append("<br/>");
                         }
                     }
@@ -143,27 +170,49 @@
                 </asp:DropDownList></td>
             </tr>
             <tr>
-                <td style="vertical-align: top">
-                    <asp:CheckBoxList ID="chkLang" runat="server">
-                        <asp:ListItem Value="en">English</asp:ListItem>
-                        <asp:ListItem Value="ar">Arabic</asp:ListItem>
-                        <asp:ListItem Value="az">Azeri</asp:ListItem>
-                        <asp:ListItem Value="cs">Czech</asp:ListItem>
-                        <asp:ListItem Value="de">German</asp:ListItem>
-                        <asp:ListItem Value="es">Spanish</asp:ListItem>
-                        <asp:ListItem Value="fr">French</asp:ListItem>
-                        <asp:ListItem Value="id">Indonesian</asp:ListItem>
-                        <asp:ListItem Value="it">Italian</asp:ListItem>
-                        <asp:ListItem Value="ja">Japanese</asp:ListItem>
-                        <asp:ListItem Value="ko">Korean</asp:ListItem>
-                        <asp:ListItem Value="nl">Dutch</asp:ListItem>
-                        <asp:ListItem Value="pl">Polish</asp:ListItem>
-                        <asp:ListItem Value="pt">Portuguese</asp:ListItem>
-                        <asp:ListItem Value="ru">Russian</asp:ListItem>
-                        <asp:ListItem Value="sv">Swedish</asp:ListItem>
-                        <asp:ListItem Value="uk">Ukrainian</asp:ListItem>
-                        <asp:ListItem Value="hk">Cantonese</asp:ListItem>             
-                    </asp:CheckBoxList>
+                <td style="vertical-align: top" class="chkBoxes">
+                    <h3>Core Languages</h3>
+                    <asp:CheckBox runat="server" ID="chkBoxSelectAllCore" Visible="true" Text="Select/Deselect All Core" CssClass="JchkAll" />
+                    <div class="chkBoxesCore">
+                        <asp:CheckBoxList ID="chkLangCore" runat="server">
+                            <asp:ListItem Value="en">English</asp:ListItem>
+                            <asp:ListItem Value="ar">Arabic</asp:ListItem>
+                            <asp:ListItem Value="fr">French</asp:ListItem>
+                            <asp:ListItem Value="ru">Russian</asp:ListItem>
+                            <asp:ListItem Value="de">German</asp:ListItem>
+                        </asp:CheckBoxList>
+                    </div>
+                    <h3>Languages</h3>
+                    <asp:CheckBox runat="server" ID="chkBoxSelectAllOthers" Visible="true" Text="Select/Deselect All Other" CssClass="JchkAll" />
+                    <div class="chkBoxesOthers">
+                        <asp:CheckBoxList ID="chklangOthers" runat="server">
+                            <asp:ListItem Value="id">Indonesian</asp:ListItem>
+                            <asp:ListItem Value="az">Azeri</asp:ListItem>
+                            <asp:ListItem Value="cs">Czech</asp:ListItem>
+                            <asp:ListItem Value="es">Spanish</asp:ListItem>
+                            <asp:ListItem Value="it">Italian</asp:ListItem>
+                            <asp:ListItem Value="ja">Japanese</asp:ListItem>
+                            <asp:ListItem Value="ko">Korean</asp:ListItem>
+                            <asp:ListItem Value="nl">Dutch</asp:ListItem>
+                            <asp:ListItem Value="pl">Polish</asp:ListItem>
+                            <asp:ListItem Value="pt">Portuguese</asp:ListItem>
+                            <asp:ListItem Value="sv">Swedish</asp:ListItem>
+                            <asp:ListItem Value="uk">Ukrainian</asp:ListItem>
+                            <asp:ListItem Value="hk">Cantonese</asp:ListItem>
+                        </asp:CheckBoxList>
+                    </div>
+                    <h3>New Languages</h3>
+                    <asp:CheckBox runat="server" ID="chkBoxSelectAllNewLanguages" Visible="true" Text="Select/Deselect All New Languages" CssClass="JchkAll" />
+                    <div class="chkBoxesNewLanguages">
+                        <asp:CheckBoxList ID="chkNewLanguages" runat="server">
+                            <asp:ListItem Value="hu">Hungarian</asp:ListItem>
+                            <asp:ListItem Value="da">Danish</asp:ListItem>
+                            <asp:ListItem Value="ro">Romanian</asp:ListItem>
+                            <asp:ListItem Value="no">Norwegian</asp:ListItem>
+                            <asp:ListItem Value="fi">Finnish</asp:ListItem>
+                        </asp:CheckBoxList>
+                    </div>
+                    <asp:CheckBox runat="server" ID="chkall" Visible="true" Text="Select/Deselect All" CssClass="JchkAll" />
                 </td>
                 <td style="vertical-align: top">
                     <asp:TextBox ID="txtIDs" TextMode="MultiLine" Rows="50" runat="server" Height="100%" Width="98%"></asp:TextBox></td>
@@ -180,5 +229,59 @@
         </table>
 
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function Selectall() {
+            if ($('#<%= chkall.ClientID  %>').is(':checked')) {
+                $(".chkBoxes :input").each(function () {
+                    $(this).prop('checked', true);
+                });
+            }
+            else {
+                $(".chkBoxes :input").each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        }
+
+        function SelectallCore() {
+            if ($('#<%= chkBoxSelectAllCore.ClientID  %>').is(':checked')) {
+                $(".chkBoxesCore :input").each(function () {
+                    $(this).prop('checked', true);
+                });
+            }
+            else {
+                $(".chkBoxesCore :input").each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        }
+
+        function SelectallOthers() {
+            if ($('#<%= chkBoxSelectAllOthers.ClientID  %>').is(':checked')) {
+                $(".chkBoxesOthers :input").each(function () {
+                    $(this).prop('checked', true);
+                });
+            }
+            else {
+                $(".chkBoxesOthers :input").each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        }
+
+        function SelectallNewLanguages() {
+            if ($('#<%= chkBoxSelectAllNewLanguages.ClientID  %>').is(':checked')) {
+                $(".chkBoxesNewLanguages :input").each(function () {
+                    $(this).prop('checked', true);
+                });
+            }
+            else {
+                $(".chkBoxesNewLanguages :input").each(function () {
+                    $(this).prop('checked', false);
+                });
+            }
+        }
+    </script>
 </body>
 </html>
