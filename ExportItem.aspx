@@ -20,7 +20,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Event Report</title>
+    <title>Export Items</title>
 
     <style>
         body {
@@ -75,28 +75,71 @@
             {
                 string path = txtPath.Text;
                 string DB = drpDB.SelectedItem.Value;
-                Database db = Database.GetDatabase(DB);                
+                Database db = Database.GetDatabase(DB);
                 Language lang = Sitecore.Globalization.Language.Parse(txtLang.Text);
                 Item parent = db.GetItem(path, lang);
                 tb = new DataTable();
                 tb.Columns.Add("Item Path");
                 int rowNumber = 0;
-                foreach (Item childItem in parent.Axes.GetDescendants())
+
+                List<Item> childItems = new List<Item>();
+                if (chkbxDescendant.Checked)
                 {
-                    if (childItem.TemplateName == txtTemplateName.Text)// && childItem["Type"] == "{612536F4-3F71-4C5F-8A94-FE6580F7103A}")
+                    childItems = parent.Axes.GetDescendants().Where(i => i.TemplateName == txtTemplateName.Text).ToList();
+                }
+                else
+                {
+                    childItems = parent.GetChildren().Where(i => i.TemplateName == txtTemplateName.Text).ToList();
+                }
+
+                foreach (Item childItem in childItems)
+                {
+                    // Ucomment below section for date filter *************
+                    //DateTime dtFrom = Sitecore.DateUtil.ParseDateTime(childItem["Event From"],DateTime.MinValue);
+                    //DateTime dtTo = Sitecore.DateUtil.ParseDateTime(childItem["Event To"],DateTime.MaxValue);
+
+                    //DateTime txtFrom = DateTime.Parse(txtEventFrom.Text);
+                    //DateTime txtTo = DateTime.Parse(txtEventTo.Text);
+
+                    //if ((dtFrom >= txtFrom && dtFrom <= txtTo) || (dtTo >= txtFrom && dtTo <=txtTo))
+                    //{
+                    // Ucomment above section for date filter ***************
+                    DataRow itemRow = tb.NewRow();
+                    //int colNumber = 0;  
+
+                    if (!string.IsNullOrEmpty(txtFields.Text))
                     {
-                        // Ucomment below section for date filter *************
-                        //DateTime dtFrom = Sitecore.DateUtil.ParseDateTime(childItem["Event From"],DateTime.MinValue);
-                        //DateTime dtTo = Sitecore.DateUtil.ParseDateTime(childItem["Event To"],DateTime.MaxValue);
+                        string[] arrFieldNames = txtFields.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
-                        //DateTime txtFrom = DateTime.Parse(txtEventFrom.Text);
-                        //DateTime txtTo = DateTime.Parse(txtEventTo.Text);
+                        foreach (string strFieldName in arrFieldNames)
+                        {
+                            var field = childItem.Fields[strFieldName];
+                            if (field != null)
+                            {
+                                if (rowNumber == 0)
+                                {
+                                    if (!tb.Columns.Contains(field.Name))
+                                    {
+                                        tb.Columns.Add(field.Name);
+                                    }
+                                    else
+                                    {
+                                        tb.Columns.Add(field.Name + "_" + field.ID);
+                                    }
+                                }
 
-                        //if ((dtFrom >= txtFrom && dtFrom <= txtTo) || (dtTo >= txtFrom && dtTo <=txtTo))
-                        //{
-                        // Ucomment above section for date filter ***************
-                        DataRow itemRow = tb.NewRow();
-                        //int colNumber = 0;                        
+                                itemRow[strFieldName] = childItem.Fields[strFieldName].GetValue(true);
+                            }
+
+                        }
+
+                        itemRow["Item Path"] = childItem.Paths.Path;
+                        tb.Rows.Add(itemRow);
+                        rowNumber++;
+
+                    }
+                    else
+                    {
                         childItem.Fields.ReadAll();
                         foreach (Field fld in childItem.Fields)
                         {
@@ -130,14 +173,17 @@
                         }
 
                         tb.Rows.Add(itemRow);
-                        //}
                     }
+
+
+                    //}
+
                 }
 
                 lblCount.Text = "Total items: " + tb.Rows.Count.ToString();
                 grdLanguageReport.DataSource = tb;
                 grdLanguageReport.DataBind();
-                Session.Add("Data", tb);
+                //Session.Add("Data", tb);
             }
             catch (Exception ex)
             {
@@ -179,8 +225,10 @@
         <h2>Export Item Tool - Visit Dubai</h2>
         <table>
             <tr>
-                <td>Provide Parent Item Path:<asp:TextBox ID="txtPath" Width="700px" runat="server"></asp:TextBox></td>
-                <td>Template Name:<asp:TextBox ID="txtTemplateName" Width="700px" runat="server"></asp:TextBox></td>
+                <td>Parent Item Path:<asp:TextBox ID="txtPath" Width="500px" runat="server"></asp:TextBox></td>
+                <td>Include Descendants<asp:CheckBox ID="chkbxDescendant" runat="server" /></td>
+                <td>Template Name:<asp:TextBox ID="txtTemplateName" Width="500px" runat="server"></asp:TextBox></td>
+                <td>Fields:<asp:TextBox ID="txtFields" Width="300px" TextMode="MultiLine" runat="server" ToolTip="Optional"></asp:TextBox></td>
                 <%--<td>Event From:<asp:TextBox ID="txtEventFrom" runat="server"></asp:TextBox></td>
                 <td>Event To:<asp:TextBox ID="txtEventTo" runat="server"></asp:TextBox></td>--%>
                 <td>Language:<asp:TextBox ID="txtLang" Text="en" runat="server"></asp:TextBox></td>

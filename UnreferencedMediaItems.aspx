@@ -21,6 +21,8 @@
 <%@ Import Namespace="System.Data.SqlClient" %>
 <%@ Import Namespace="System.Data" %>
 <%@ Import Namespace="Sitecore.Zip" %>
+<%@ Import Namespace="Sitecore.ContentSearch" %>
+<%@ Import Namespace="Sitecore.ContentSearch.SearchTypes" %>
 
 <!DOCTYPE html>
 <script language="C#" runat="server">   
@@ -52,6 +54,7 @@
                 }
             }
         }
+
     }
     public ZipWriter zipWriter;//= new ZipWriter("temp.zip");
     private void AddMediaItemToZip(MediaItem mediaItem)
@@ -122,6 +125,7 @@
 
         if (nRefCount == 0)
         {
+            // lblMessage.Text += " LinkDB Zero";
             //var refItemId = refItem.ID.ToString().Replace("{", "").Replace("}", "").ToLower();
             //var refItemPath = refItem.Paths.FullPath.Replace("/sitecore/media library", "").ToLower();
 
@@ -131,7 +135,8 @@
             var refItemIdFull = refItem.ID.ToString().Replace("{", "").Replace("}", "").ToLower();
             var refItemPath = refItem.Paths.FullPath.ToLower().Replace("/sitecore/media library", "");
 
-            nRefCount = GetLinkedItemsCountByQuery(refItemId, refItemIdFull, refItemPath);
+            // nRefCount = GetLinkedItemsCountByQuery(refItemId, refItemIdFull, refItemPath);
+            // lblMessage.Text += " SQL Query Links " + nRefCount;
         }
 
         return nRefCount;
@@ -271,6 +276,12 @@
         {
             if (MedItm != null && MedItm.TemplateID.ToString() != "{FE5DD826-48C6-436D-B87A-7C4210C7413B}")
             {
+
+                //if (MedItm.Statistics.Updated.Year <= 2015)
+                //{
+
+                //}
+
                 bool valid = true;
                 //if (chkIncludeSystem.Checked)
                 //{
@@ -295,7 +306,17 @@
                     {
                         UnusedMedia.Add(MedItm);
                         count++;
+
+                        //lblMessage.Text += " Searching in index";
+                        //// Search in index, if media item is referenced in content
+                        //var isReferencedinContent = SearchMediaInIndex(MedItm);
+                        //lblMessage.Text += " " + isReferencedinContent.ToString() + "<br />";
+
                     }
+                    //else
+                    //{
+                    //    lblMessage.Text += string.Format("Media item with ID {0} is referenced!<br />", MedItm.ID.ToString());
+                    //}
                 }
 
                 //if (TotalMediaCount > 15)
@@ -313,6 +334,7 @@
                 }
             }
         }
+
     }
 
     List<Item> UnusedMedia = new List<Item>();
@@ -320,7 +342,30 @@
     int TotalMediaCount = 0;
     int ProcessedMediaCount = 0;
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="MedItm"></param>
+    /// <returns></returns>
+    public bool SearchMediaInIndex(MediaItem MedItm)
+    {
+        using (var searchIndex = ContentSearchManager.GetIndex("sitecore_master_index").CreateSearchContext())
+        {
+            //Perform the search on index
+            if (searchIndex != null)
+            {
+                var strMediaItemId = MedItm.ID.ToShortID().ToString().ToLower();
+                lblMessage.Text += " Media ID " + strMediaItemId;
+                var searchResult = searchIndex.GetQueryable<SearchResultItem>().Where(item => item.Content.Contains(strMediaItemId)).ToList();
+                if (!searchResult.Any())
+                {
+                    lblMessage.Text += " No reference found!";
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
     /// <summary>
     /// Loads all unreferenced Media except the Media Folder.
@@ -328,11 +373,11 @@
     public void LoadUnreferencedItems()
     {
         currentDB = Sitecore.Data.Database.GetDatabase(ddDb.SelectedValue);
-        if (ddDb.SelectedValue == "master")
-        {
-            Sitecore.Context.SetActiveSite("shell");
-            currentDB = Sitecore.Context.ContentDatabase;
-        }
+        //if (dddb.selectedvalue == "master")
+        //{
+        //    sitecore.context.setactivesite("shell");
+        //    currentdb = sitecore.context.contentdatabase;
+        //}
         string mediaItemrootpath = "/sitecore/media library/";
         if (!string.IsNullOrEmpty(txtmediarootpath.Text))
         {
@@ -349,7 +394,15 @@
 
 
             GetUnusedMediaList(MediaLibrary, 1);
+            sbMessage.Append("<table>");
+            sbMessage.Append("<tr><th>Media Path</th><th>Date Created</th><th>Date Updated</th></tr>");
+            foreach (Item mediaItem in UnusedMedia.OrderBy(i => i.Statistics.Created))
+            {
+                sbMessage.AppendFormat("<tr><td>{0}</td><td>{1}</td><td>{2}</td></tr>", mediaItem.Paths.Path, mediaItem.Statistics.Created.Date.ToString("dd/MM/yyyy"), mediaItem.Statistics.Updated.Date.ToString("dd/MM/yyyy"));
+            }
+            sbMessage.Append("</table>");
 
+            lblMessage.Text += sbMessage.ToString();
             //foreach (Item MedItm in MediaLibrary.Axes.GetDescendants())
             //{
             //    if (MedItm != null && MedItm.TemplateID.ToString() != "{FE5DD826-48C6-436D-B87A-7C4210C7413B}")
@@ -467,12 +520,13 @@
             Response.End();
         }
     }
-
+    StringBuilder sbMessage;
     protected void btnGo_Click(object sender, EventArgs e)
     {
         try
         {
             DateTime dtStartDateTime = DateTime.Now;
+            sbMessage = new StringBuilder();
 
             lblStartTime.Text = "Start DateTime:" + dtStartDateTime.ToString("dd-MM-yyyy hh:mm:ss");
 
@@ -760,7 +814,6 @@
         thead .itmid {
             max-width: 20%;
         }
-        
     </style>
 
 
@@ -823,6 +876,10 @@
         input[type=checkbox], input[type=radio] {
             height: 16px;
             width: 16px;
+        }
+
+        th, td {
+            border: 1px solid #000;
         }
     </style>
     <style>
@@ -917,12 +974,16 @@
 
             <div class="form-group">
                 <asp:Button class="btn btn-default" ID="btnGo" runat="server" OnClick="btnGo_Click" Text="Get Unused List" />
-                <asp:Button class="btn btn-default" ID="btnDelete" runat="server" OnClientClick="if (!MediaItemDeleteConfirmation()) return false;" OnClick="btnDelete_Click" Text="Move to Recycle bin" Enabled="false" Visible="false" />
+                <asp:Button class="btn btn-default" ID="btnDelete" runat="server" OnClientClick="if (!MediaItemDeleteConfirmation()) return false;" OnClick="btnDelete_Click" Text="Move to Recycle bin" Enabled="true" Visible="true" />
                 <asp:Button class="btn btn-default" ID="btnPermDelete" runat="server" OnClientClick="if (!MediaItemPermDeleteConfirmation()) return false;" OnClick="btnPermDelete_Click" Text="Delete" Enabled="false" Visible="false" />
 
                 <%--  <asp:Button class="btn btn-default" ID="btnEmptyRecycleBin" OnClientClick="if (!EmptyRecycleBinConfirmation()) return false;" runat="server" OnClick="btnEmptyRecycleBin_Click" Text="Empty Recycle bin" />--%>
             </div>
-            <asp:Label ID="lblMessage" runat="server"></asp:Label>
+            <div class="row">
+                <div class="col-lg-12">
+                    <asp:Label ID="lblMessage" runat="server"></asp:Label>
+                </div>
+            </div>
             <br />
             <asp:Panel ID="pnlmedias" runat="server">
                 <div class="form-group">
@@ -994,6 +1055,7 @@
                         <FooterTemplate>
                             </table>
                         </div>
+                       
                         </FooterTemplate>
                     </asp:Repeater>
                 </div>

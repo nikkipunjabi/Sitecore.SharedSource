@@ -15,7 +15,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title>Bulk Datasource Update Tool</title>
+    <title>Get Field Value</title>
     <style>
         body {
             font-family: verdana, arial, sans-serif;
@@ -62,52 +62,7 @@
             base.OnLoad(e);
             if (Sitecore.Context.User.IsAuthenticated == false)
             {
-                Response.Redirect("login.aspx?returnUrl=bulkdatasourceupdate.aspx");
-            }
-        }
-
-        private void UpdateRenderingDatasource(Item item, string renderingId, string newDatasourceId, ref StringBuilder sbSummary, ref List<string> listItemIds)
-        {
-            if (item != null)
-            {
-                //Get all added renderings
-                //Sitecore.Layouts.RenderingReference[] renderings = item.Visualization.GetRenderings(Sitecore.Context.Device, true);
-                var db = item.Database;
-                // Default device from Sitecore
-                var deviceItem = db.GetItem("{FE5D7FDF-89C0-4D99-9AA3-B5FBD009C9F3}");
-                DeviceItem device = new DeviceItem(deviceItem);
-
-                Sitecore.Layouts.RenderingReference[] renderings = item.Visualization.GetRenderings(device, true).Where(r => r.RenderingID == Sitecore.Data.ID.Parse(renderingId)).ToArray();
-
-                if (renderings.Count() == 0)
-                {
-                    sbSummary.Append("Item not updated: " + item.Paths.Path + ", Error: Rendering with ID " + renderingId + " not found in the item presentation!").AppendLine("<br />");
-                    return;
-                }
-
-                // Get the layout definitions and the device
-                Sitecore.Data.Fields.LayoutField layoutField = new Sitecore.Data.Fields.LayoutField(item.Fields[Sitecore.FieldIDs.LayoutField]);
-
-                if (!string.IsNullOrEmpty(layoutField.Value))
-                {
-                    Sitecore.Layouts.LayoutDefinition layoutDefinition = Sitecore.Layouts.LayoutDefinition.Parse(layoutField.Value);
-
-                    Sitecore.Layouts.DeviceDefinition deviceDefinition = layoutDefinition.GetDevice(device.ID.ToString());
-
-                    foreach (Sitecore.Layouts.RenderingReference rendering in renderings)
-                    {
-                        // Update the renderings datasource value accordingly 
-                        deviceDefinition.GetRendering(rendering.RenderingID.ToString()).Datasource = newDatasourceId;
-                        // Save the layout changes
-                        item.Editing.BeginEdit();
-                        layoutField.Value = layoutDefinition.ToXml();
-                        item.Editing.EndEdit();
-                        sbSummary.Append("Item updated: " + item.Paths.Path).Append(", Rendering updated: " + rendering.RenderingItem.DisplayName).Append("<br />");
-                    }
-
-                    listItemIds.Add(item.ID.ToString());
-                   
-                }
+                Response.Redirect("login.aspx?returnUrl=getfieldvalue.aspx");
             }
         }
 
@@ -116,11 +71,13 @@
         {
             int count = 0;
             var listItemIds = new List<string>();
+            var tb = new System.Data.DataTable();
+            tb.Columns.Add("ID");
             StringBuilder sb = new StringBuilder();
             try
             {
-                sb.Append("Summary:").Append("<br/>");
-                bool isSubitem = false;
+                // sb.Append("Summary:").Append("<br />");
+                //tb.Columns.Add("Summary:");
                 string strDB = drpDB.SelectedItem.Value;
 
                 Database db = null;
@@ -138,68 +95,81 @@
                 if (db != null)
                 {
                     string[] strArray = txtIDs.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-                    //if (drpIsSubItem.SelectedIndex == 1)
-                    //{
-                    //    isSubitem = true;
-                    //}
+                    sb.Append("<table>");
+                    var row = 0;
 
                     foreach (string valueSet in strArray)
                     {
-                        var itemId = string.Empty;
-                        var renderingId = string.Empty;
-                        var newDatasorceId = string.Empty;
 
-                        var valueArray = valueSet.Split(',');
+                        System.Data.DataRow itemRow = tb.NewRow();
 
-                        if (valueArray.Length == 3)
+                        Item i = db.GetItem(valueSet);
+
+                        if (i == null || i.ID.ToString() == "{F344DBE2-BC34-49FB-8564-FD74048702D9}")
                         {
-                            itemId = valueArray[0];
-                            renderingId = valueArray[1];
-                            newDatasorceId = valueArray[2];
-                        }
-                        else
-                        {
+                            sb.Append("<tr><td>");
+                            sb.Append("Item not found:");
+                            sb.Append("</td><tr>");
                             continue;
                         }
+                        var strLanguage = "en";
+                        strLanguage = txtLanguage.Text;
 
-                        if (!string.IsNullOrEmpty(itemId) && !string.IsNullOrEmpty(renderingId) && !string.IsNullOrEmpty(newDatasorceId))
+                        var language = i.Languages.FirstOrDefault(l => l.Name == txtLanguage.Text);
+                        if (language != null)
                         {
-                            if (Sitecore.Data.ID.IsID(itemId) && Sitecore.Data.ID.IsID(renderingId) && Sitecore.Data.ID.IsID(newDatasorceId))
+                            var languageSpecificItem = db.GetItem(i.ID, language);
+                            if (languageSpecificItem != null && languageSpecificItem.Versions.Count > 0)
                             {
-                                Item i = db.GetItem(itemId);
-                                if (i == null || i.ID.ToString() == "{F344DBE2-BC34-49FB-8564-FD74048702D9}")
-                                {
-                                    sb.Append("Item not found: " + itemId).Append("<br/>");
-                                    continue;
-                                }
-                                //PublishItem(i, isSubitem, DB, lang.Value);
-                                UpdateRenderingDatasource(i, renderingId, newDatasorceId, ref sb, ref listItemIds);
+                                string[] arrFieldNames = txtFieldName.Text.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
 
+                                foreach (string strFieldName in arrFieldNames)
+                                {
+                                    var field = i.Fields[strFieldName];
+                                    if (field != null)
+                                    {
+                                        if (row == 0)
+                                        {
+                                            if (!tb.Columns.Contains(field.Name))
+                                            {
+                                                tb.Columns.Add(field.Name);
+                                            }
+                                            else
+                                            {
+                                                tb.Columns.Add(field.Name + "_" + field.ID);
+                                            }
+                                        }
+
+                                        itemRow[strFieldName] = i.Fields[strFieldName].GetValue(true);
+                                    }
+                                }
                             }
-                            else
-                            {
-                                continue;
-                            }
+                            itemRow["ID"] = i.ID.ToString();
+                            tb.Rows.Add(itemRow);
+                            row++;
                         }
                     }
-                    count = listItemIds.Distinct().Count();
+                    sb.Append("</table>");
 
-                    sb.Append("Total items updated : " + count);
+                    grdLanguageReport.DataSource = tb;
+                    grdLanguageReport.DataBind();
                 }
-
             }
+
             catch (Exception ex)
             {
-                lblError.Text = ex.ToString();
+                lblError.Text = ex.Message;
             }
 
             lblError.Text = sb.ToString();
+
+            //lblError.Text = sb.ToString();
         }
     </script>
 </head>
 <body>
     <form id="form1" runat="server">
-        <h2>Bulk Datasource Update Tool - Visit Dubai</h2>
+        <h2>Get FIeld Value - Visit Dubai</h2>
         <table class="table-style-three" style="width: 70%">
             <tr>
                 <%-- <td style="width: 22%">Update Datasource:<asp:DropDownList ID="drpIsSubItem" runat="server">
@@ -212,13 +182,14 @@
                     <asp:ListItem Text="Web" Value="web"></asp:ListItem>
                     <asp:ListItem Text="HKG" Value="hkg"></asp:ListItem>
                 </asp:DropDownList></td>
-            </tr>
-            <tr>
-                <td>Please provide the input in <strong>ItemId,Rendering Id,Datasource Id</strong> format, e.g.:
-                    <br />
-                    {110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9},{885B8314-7D8C-4CBB-8000-01421EA8F406},{110D559F-DEA5-42EA-9C1C-8A5DF7E70EF9}
+                <td>Field Name:
+                    <asp:TextBox ID="txtFieldName" runat="server"></asp:TextBox>
+                </td>
+                <td>Language:
+                    <asp:TextBox ID="txtLanguage" runat="server"></asp:TextBox>
                 </td>
             </tr>
+
             <tr>
                 <%--<td style="vertical-align: top">
                     <asp:CheckBoxList ID="chkLang" runat="server" Visible="false">
@@ -247,11 +218,17 @@
             </tr>
             <tr>
                 <td colspan="2">
-                    <asp:Button ID="btnPublish" runat="server" Text="Update Datsource" OnClick="btnPublish_Click" /></td>
+                    <asp:Button ID="btnPublish" runat="server" Text="Get Field Value" OnClick="btnPublish_Click" /></td>
             </tr>
             <tr>
                 <td colspan="2" class="red-bg">
                     <asp:Label ID="lblError" runat="server"></asp:Label>
+                </td>
+                
+            </tr>
+            <tr>
+                <td>
+                    <asp:GridView ID="grdLanguageReport" CssClass="table-style-three" runat="server"></asp:GridView>
                 </td>
             </tr>
         </table>

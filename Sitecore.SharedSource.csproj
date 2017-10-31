@@ -55,6 +55,9 @@
     <Reference Include="Sitecore.Kernel">
       <HintPath>..\..\..\..\inetpub\wwwroot\sc70rev130918\Website\bin\Sitecore.Kernel.dll</HintPath>
     </Reference>
+    <Reference Include="Sitecore.Zip">
+      <HintPath>..\..\..\..\inetpub\wwwroot\sc70rev130918\Website\bin\Sitecore.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -83,6 +86,8 @@
     <Content Include="bootstrap\js\npm.js" />
     <Content Include="BulkDatasourceUpdate.aspx" />
     <Content Include="BulkDelete.aspx" />
+    <Content Include="BulkMediaExport.aspx" />
+    <Content Include="BulkMediaImport.aspx" />
     <Content Include="BulkPublish-cn.aspx" />
     <Content Include="BulkPublish.aspx" />
     <Content Include="BulkTemplateChange.aspx" />
@@ -98,6 +103,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="GenericReport.aspx" />
     <Content Include="BulkLanguageReport.aspx" />
+    <Content Include="GetFieldValue.aspx" />
     <Content Include="GetUpdateData.aspx" />
     <Content Include="images\background.jpg" />
     <Content Include="js\jquery-2.1.1.min.js" />
@@ -112,6 +118,7 @@
     <Content Include="UnlockItem.aspx" />
     <Content Include="GetKeywordReferenceItems.aspx" />
     <Content Include="UnreferencedMediaItems.aspx" />
+    <Content Include="UpdateFieldValue.aspx" />
     <Content Include="UserReport.aspx" />
     <Content Include="WebForm1.aspx" />
   </ItemGroup>
