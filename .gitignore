@@ -307,3 +307,8 @@ __pycache__/
 
 # OpenCover UI analysis results
 OpenCover/
+*.config
+*.cache
+*.config
+obj/Debug
+.vs/config

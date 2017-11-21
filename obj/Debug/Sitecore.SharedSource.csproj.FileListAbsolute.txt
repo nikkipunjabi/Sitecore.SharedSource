@@ -85,3 +85,9 @@ C:\Projects\Sitecore7.SharedSource\Sitecore7.SharedSource\bin\Telerik.Web.UI.xml
 C:\Projects\Sitecore7.SharedSource\Sitecore7.SharedSource\obj\Debug\Sitecore.SharedSource.csprojResolveAssemblyReference.cache
 C:\Projects\Sitecore7.SharedSource\Sitecore7.SharedSource\obj\Debug\Sitecore.SharedSource.dll
 C:\Projects\Sitecore7.SharedSource\Sitecore7.SharedSource\obj\Debug\Sitecore.SharedSource.pdb
+C:\Work\Visit Dubai\Development\SharedSources\Sitecore.SharedSource\bin\Sitecore.SharedSource.dll
+C:\Work\Visit Dubai\Development\SharedSources\Sitecore.SharedSource\bin\Sitecore.SharedSource.pdb
+C:\Work\Visit Dubai\Development\SharedSources\Sitecore.SharedSource\obj\Debug\Sitecore.SharedSource.csprojResolveAssemblyReference.cache
+C:\Work\Visit Dubai\Development\SharedSources\Sitecore.SharedSource\obj\Debug\Sitecore.SharedSource.csproj.CoreCompileInputs.cache
+C:\Work\Visit Dubai\Development\SharedSources\Sitecore.SharedSource\obj\Debug\Sitecore.SharedSource.dll
+C:\Work\Visit Dubai\Development\SharedSources\Sitecore.SharedSource\obj\Debug\Sitecore.SharedSource.pdb

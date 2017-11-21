@@ -24,6 +24,7 @@
 <%@ Import Namespace="Sitecore.ContentSearch" %>
 <%@ Import Namespace="Sitecore.ContentSearch.SearchTypes" %>
 
+
 <!DOCTYPE html>
 <script language="C#" runat="server">   
     Database currentDB = null;
