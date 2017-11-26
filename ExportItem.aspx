@@ -85,11 +85,25 @@
                 List<Item> childItems = new List<Item>();
                 if (chkbxDescendant.Checked)
                 {
-                    childItems = parent.Axes.GetDescendants().Where(i => i.TemplateName == txtTemplateName.Text).ToList();
+                    if (orderByDate.Checked)
+                    {
+                        childItems = parent.Axes.GetDescendants().Where(i => i.TemplateName == txtTemplateName.Text).OrderBy(x => x["__Updated"]).ToList();
+                    }
+                    else
+                    {
+                        childItems = parent.Axes.GetDescendants().Where(i => i.TemplateName == txtTemplateName.Text).ToList();
+                    }
                 }
                 else
                 {
-                    childItems = parent.GetChildren().Where(i => i.TemplateName == txtTemplateName.Text).ToList();
+                    if (orderByDate.Checked)
+                    {
+                        childItems = parent.GetChildren().Where(i => i.TemplateName == txtTemplateName.Text).OrderBy(x => x["__Updated"]).ToList();
+                    }
+                    else
+                    {
+                        childItems = parent.GetChildren().Where(i => i.TemplateName == txtTemplateName.Text).ToList();
+                    }
                 }
 
                 foreach (Item childItem in childItems)
@@ -143,7 +157,7 @@
                         childItem.Fields.ReadAll();
                         foreach (Field fld in childItem.Fields)
                         {
-                            if (!fld.Name.StartsWith("__"))
+                            if (!fld.Name.StartsWith("__") || fld.Name.StartsWith("__Updated"))
                             {
                                 if (rowNumber == 0)
                                 {
@@ -162,7 +176,7 @@
 
                         foreach (Field fld in childItem.Fields)
                         {
-                            if (!fld.Name.StartsWith("__"))
+                            if (!fld.Name.StartsWith("__") || fld.Name.StartsWith("__Updated"))
                             {
                                 if (tb.Columns[fld.Name] != null)
                                 {
@@ -227,6 +241,7 @@
             <tr>
                 <td>Parent Item Path:<asp:TextBox ID="txtPath" Width="500px" runat="server"></asp:TextBox></td>
                 <td>Include Descendants<asp:CheckBox ID="chkbxDescendant" runat="server" /></td>
+                <td>Order By Date<asp:CheckBox ID="orderByDate" runat="server" /></td>
                 <td>Template Name:<asp:TextBox ID="txtTemplateName" Width="500px" runat="server"></asp:TextBox></td>
                 <td>Fields:<asp:TextBox ID="txtFields" Width="300px" TextMode="MultiLine" runat="server" ToolTip="Optional"></asp:TextBox></td>
                 <%--<td>Event From:<asp:TextBox ID="txtEventFrom" runat="server"></asp:TextBox></td>
