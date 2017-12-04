@@ -122,7 +122,8 @@
                         {
                             PublishItem(i, isSubitem, DB, lang.Value);
                             sb.Append("Item published:").Append(i.ID).Append("Language: ").Append(lang.Value).Append("<br/>");
-                            Sitecore.Diagnostics.Log.Info("Item Published Using Tool - Language: " + lang.Value, this);
+                            string log = string.Format("Item Published By {0} Using Tool -- Item Path: {1} -- Item ID: {2} -- Language: {3} -- SubItems: {4}", Sitecore.Context.User.Name, i.Paths.FullPath, i.ID, lang.Value, isSubitem.ToString());
+                            Sitecore.Diagnostics.Log.Info(log, this);
                         }
                     }
                     foreach (ListItem lang in chklangOthers.Items)
@@ -132,6 +133,8 @@
                             PublishItem(i, isSubitem, DB, lang.Value);
                             Sitecore.Diagnostics.Log.Info("Item Published Using Tool - Language: " + lang.Value, this);
                             sb.Append("Item published:").Append(i.ID).Append("Language: ").Append(lang.Value).Append("<br/>");
+                            string log = string.Format("Item Published By {0} Using Tool -- Item Path: {1} -- Item ID: {2} -- Language: {3}", Sitecore.Context.User.Name, i.Paths.FullPath, i.ID, lang.Value);
+                            Sitecore.Diagnostics.Log.Info(log, this);
                         }
                     }
                     foreach (ListItem lang in chkNewLanguages.Items)
@@ -141,6 +144,8 @@
                             PublishItem(i, isSubitem, DB, lang.Value);
                             Sitecore.Diagnostics.Log.Info("Item Published Using Tool - Language: " + lang.Value, this);
                             sb.Append("Item published:").Append(i.ID).Append("Language: ").Append(lang.Value).Append("<br/>");
+                            string log = string.Format("Item Published By {0} Using Tool -- Item Path: {1} -- Item ID: {2} -- Language: {3}", Sitecore.Context.User.Name, i.Paths.FullPath, i.ID, lang.Value);
+                            Sitecore.Diagnostics.Log.Info(log, this);
                         }
                     }
                     count++;

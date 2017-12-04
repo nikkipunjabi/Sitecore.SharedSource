@@ -312,3 +312,5 @@ OpenCover/
 *.config
 obj/Debug
 .vs/config
+/LanguageReportV2-hkg.aspx
+/ExportItem-Specific.aspx

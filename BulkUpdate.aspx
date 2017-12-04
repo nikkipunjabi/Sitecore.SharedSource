@@ -68,7 +68,7 @@
             base.OnLoad(e);
             string DB = drpDB.SelectedItem.Value;
             db = Database.GetDatabase(DB);
-            if (Sitecore.Context.User.IsAdministrator == false)
+            if (Sitecore.Context.User.IsAuthenticated == false)
             {
                 Response.Redirect("login.aspx?returnUrl=bulkupdate.aspx");
             }

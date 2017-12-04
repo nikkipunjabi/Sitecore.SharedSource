@@ -96,7 +96,7 @@
                 {
                     foreach (Item childItem in parent.Axes.GetDescendants())
                     {
-                        if (childItem.Fields["__Renderings"].ToString() != string.Empty)
+                        if (childItem.Fields != null && childItem.Fields["__Renderings"] != null && childItem.Fields["__Renderings"].ToString() != string.Empty)
                         {
                             DataRow itemRow = tb.NewRow();
                             itemRow[0] = childItem.ID;
@@ -108,13 +108,11 @@
                                 {
                                     if (tb.Columns[itemLanguage.Name] != null)
                                         itemRow[tb.Columns[itemLanguage.Name]] = "1";
-                                    //itemRow[tb.Columns[item.Language.Name]] = "1";
                                 }
                                 else
                                 {
                                     if (tb.Columns[itemLanguage.Name] != null)
                                         itemRow[tb.Columns[itemLanguage.Name]] = "0";
-                                    //itemRow[tb.Columns[item.Language.Name]] = "0";
                                 }
                             }
 
