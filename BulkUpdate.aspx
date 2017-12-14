@@ -225,6 +225,8 @@
                 <td>Language:<asp:TextBox ID="txtLang" Text="en" runat="server"></asp:TextBox></td>
                 <td>Database:<asp:DropDownList ID="drpDB" runat="server">
                     <asp:ListItem Text="Master" Value="master"></asp:ListItem>
+                    <asp:ListItem Text="Stage" Value="stage"></asp:ListItem>
+                    <asp:ListItem Text="WEB" Value="web"></asp:ListItem>
                 </asp:DropDownList></td>
             </tr>
             <tr>

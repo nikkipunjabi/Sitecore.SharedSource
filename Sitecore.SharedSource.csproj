@@ -21,6 +21,7 @@
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
     <TargetFrameworkProfile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -90,6 +91,7 @@
     <Content Include="BulkMediaImport.aspx" />
     <Content Include="BulkPublish-cn.aspx" />
     <Content Include="BulkPublish.aspx" />
+    <Content Include="BulkAddSublayout.aspx" />
     <Content Include="BulkTemplateChange.aspx" />
     <Content Include="BulkUpdate.aspx" />
     <Content Include="css\animate.css" />
@@ -110,6 +112,7 @@
     <Content Include="js\jquery.appear.js" />
     <Content Include="js\modernizr.custom.js" />
     <Content Include="js\script.js" />
+    <Content Include="BulkRemovePersonalizationRules.aspx" />
     <Content Include="LanguageReportV2.aspx" />
     <Content Include="LanguageReport.aspx" />
     <Content Include="PageCount.aspx" />
