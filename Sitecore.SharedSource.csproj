@@ -117,6 +117,8 @@
     <Content Include="LanguageReport.aspx" />
     <Content Include="PageCount.aspx" />
     <Content Include="PagesUpdated.aspx" />
+    <Content Include="sitecore\admin\SyncMailchimp.aspx" />
+    <Content Include="sitecore\admin\SyncMailjet.aspx" />
     <Content Include="TempUpdate.aspx" />
     <Content Include="UnlockItem.aspx" />
     <Content Include="GetKeywordReferenceItems.aspx" />
