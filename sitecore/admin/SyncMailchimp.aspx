@@ -275,9 +275,9 @@
             var webRequest = (HttpWebRequest)WebRequest.Create("https://us16.api.mailchimp.com/3.0/batches");
             webRequest.Method = "POST";
             webRequest.ContentType = "application/json";
-            webRequest.Headers.Add("Authorization", "apikey YourAPIKey-us16");
-            webRequest.Headers.Add("user", "'anystring: YourAPIString'");
-            webRequest.Host = "us16.api.mailchimp.com";
+            //webRequest.Headers.Add("Authorization", "your apikey");
+            //webRequest.Headers.Add("user", "'anystring: your apikey'");
+            //webRequest.Host = "yourmailchimp.api.mailchimp.com";
             webRequest.Timeout = 500000;
 
             //https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class

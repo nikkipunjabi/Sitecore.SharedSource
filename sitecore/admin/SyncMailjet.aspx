@@ -103,11 +103,31 @@
             // Begin timing.
             stopwatch.Start();
 
-            ListDictionary Tables = new ListDictionary();
-            Tables.Add("Users", "7803");
-            Tables.Add("VDDownloadsInfos", "7788");
-            Tables.Add("NewsletterSubscription", "7941");
-            Tables.Add("DSSFestivalFans", "7787");
+
+
+            //ListDictionary Tables = new ListDictionary();
+            ////Tables.Add("Users", "7803");
+            ////Tables.Add("VDDownloadsInfos", "7788");
+            //Tables.Add("NewsletterSubscription", "9201");
+            ////Tables.Add("DSSFestivalFans", "7787");
+
+            //DB to get the market value from Item: {29F516DA-C1D6-4E34-97E1-AFAD25C93A45}
+            Database db = Database.GetDatabase("master");
+
+            var marketItem = db.GetItem("{E3445ED7-8EE4-4CF9-A71D-B2A057755E2C}");
+
+            string _urlParamsToParse = marketItem["Countries"];
+            NameValueCollection nameValueCollection = Sitecore.Web.WebUtil.ParseUrlParameters(_urlParamsToParse);
+
+            //foreach (string nv in nameValueCollection)
+            //{
+            //    if (nv.Equals(usercountry))
+            //    {
+            //        userMarket = nameValueCollection[nv];
+            //        break;
+            //    }
+            //}
+
 
             List<string> MailChimpTableIDs = new List<string>();
 
@@ -117,16 +137,17 @@
 
             bool isLastRecordForRequest = false;
 
-            foreach (var myTable in Tables.Keys)
+            foreach (string nv in nameValueCollection)
             {
-                html.AppendLine("<br /> <br />" + myTable.ToString() + "<br /> <br />");
-                var strSelectQuery = @"SELECT * FROM " + myTable.ToString();
+                html.AppendLine("<br /> <br />" + nv.ToString() + "<br /> <br />");
+                //var strSelectQuery = @"SELECT * FROM " + nv.ToString() + " WHERE [Email] like 'VDQA02@dtcmdomain.com'" ;
+                var strSelectQuery = @"SELECT * FROM " + nv.ToString();
                 var TableData = GetDataTable(strSelectQuery, "external");
                 //List<users> MyUsers = new List<users>();
                 StringBuilder jsonStringList = new StringBuilder();
 
                 //Base Json Text
-                jsonStringList.AppendLine("{\"ContactsLists\":[ { \"ListID\": " + Tables[myTable.ToString()] + ", \"action\": \"addnoforce\" } ], \"Contacts\":[ ");
+                jsonStringList.AppendLine("{\"ContactsLists\":[ { \"ListID\": " + nameValueCollection[nv.ToString()] + ", \"action\": \"addnoforce\" } ], \"Contacts\":[ ");
 
                 //Backup
                 //jsonStringList.AppendLine("{\"ContactsLists\":[ { \"ListID\": 7803, \"action\": \"addnoforce\" } ], \"Contacts\":[ { \"Email\": \"jimsmith1234@example.com\", \"Name\": \"Jim\", \"Properties\": { \"country\": \"Dubai\", \"phone\": \"055555\" } }, { \"Email\": \"janetdoe1234@example.com\", \"Name\": \"Janet\", \"Properties\": { \"country\": \"value\", \"phone\": \"value2\" } } ] }");
@@ -137,6 +158,78 @@
                     int currentCount = 0;
 
                     int currentRowCount = 0;
+
+                    Dictionary<string, string> keyvalues = new Dictionary<string, string>();
+                    keyvalues.Add("five-days", "5 Days In Dubai");
+                    keyvalues.Add("24-hours-in-dubai", "1 Day In Dubai");
+                    keyvalues.Add("dubai-in-48-hours", "2 Days In Dubai");
+                    keyvalues.Add("2-day", "2 Days In Dubai");
+
+                    keyvalues.Add("summer", "Summer In Dubai");
+                    keyvalues.Add("winter", "Winter In Dubai");
+
+                    keyvalues.Add("family", "Family");
+
+                    keyvalues.Add("stopover", "Stopover");
+                    keyvalues.Add("layover", "Stopover");
+
+                    keyvalues.Add("adventure", "Adventure");
+                    keyvalues.Add("cycling", "Adventure");
+                    keyvalues.Add("action", "Adventure");
+                    keyvalues.Add("desert", "Adventure");
+                    keyvalues.Add("hatta", "Adventure");
+                    keyvalues.Add("sport", "Adventure");
+
+                    keyvalues.Add("heritage", "Culture");
+                    keyvalues.Add("cultural", "Culture");
+
+                    keyvalues.Add("/deals-and-offers", "Deals");
+                    keyvalues.Add("/retail-offers", "Deals");
+
+                    keyvalues.Add("/dsf", "Festivals");
+                    keyvalues.Add("/dubai-shopping-festival", "Festivals");
+                    keyvalues.Add("/dff", "Festivals");
+                    keyvalues.Add("/dubai-food-festival", "Festivals");
+                    keyvalues.Add("/dss", "Festivals");
+                    keyvalues.Add("ramadan", "Festivals");
+                    keyvalues.Add("eid", "Festivals");
+                    keyvalues.Add("national-day", "Festivals");
+                    keyvalues.Add("new-year", "Festivals");
+                    keyvalues.Add("/festivals/", "Festivals");
+
+                    keyvalues.Add("/events", "Events");
+
+                    keyvalues.Add("shah-rukh", "SRK");
+
+                    keyvalues.Add("cuisine", "Dining");
+                    keyvalues.Add("dining", "Dining");
+                    keyvalues.Add("foodie", "Dining");
+
+                    keyvalues.Add("shop-the", "Shopping");
+                    keyvalues.Add("shopping", "Shopping");
+                    keyvalues.Add("shop-in-dubai", "Shopping");
+
+                    keyvalues.Add("you-me-dubai", "Couples");
+                    keyvalues.Add("romantic", "Couples");
+                    keyvalues.Add("romance", "Couples");
+                    keyvalues.Add("couple", "Couples");
+
+                    keyvalues.Add("luxury", "Luxury");
+
+                    keyvalues.Add("reward", "Beaches And Relaxation");
+                    keyvalues.Add("beach", "Beaches And Relaxation");
+                    keyvalues.Add("therapy", "Beaches And Relaxation");
+                    keyvalues.Add("beaten-path", "Beaches And Relaxation");
+
+                    keyvalues.Add("business", "Business");
+                    keyvalues.Add("meet-in-dubai", "Business");
+
+                    keyvalues.Add("theme", "Theme Parks");
+
+                    keyvalues.Add("dubai-essentials", "Travel Planning");
+                    keyvalues.Add("tour", "Travel Planning");
+                    keyvalues.Add("cruise-dubai", "Travel Planning");
+
 
                     foreach (DataRow dataRow in TableData.Rows)
                     {
@@ -151,19 +244,28 @@
                                 {
                                     isLastRecordForRequest = true;
                                 }
-                                if (myTable.ToString().ToLower().Equals("users"))
+                                if (nv.ToString().ToLower().Equals("users"))
                                 {
-                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FirstName"].ToString().Trim() + " " + dataRow["LastName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["FirstName"].ToString().Trim() + "\", \"lastname\": \"" + dataRow["LastName"].ToString().Trim() + "\" , \"phone\": \"" + dataRow["PhoneNumber"].ToString().Trim() + "\", \"language\": \"" + dataRow["Language"].ToString().Trim() + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
+                                    string userLanguage = GetUserLanguageFromURL("", dataRow["Language"].ToString().ToLower(), true);
+                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FirstName"].ToString().Trim() + " " + dataRow["LastName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["FirstName"].ToString().Trim() + "\", \"lastname\": \"" + dataRow["LastName"].ToString().Trim() + "\" , \"phone\": \"" + dataRow["PhoneNumber"].ToString().Trim() + "\", \"phonecountrycode\": \"" + dataRow["CountryCode"].ToString().Trim() + "\" , \"language\": \"" + userLanguage + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
                                 }
-                                else if (myTable.ToString().ToLower().Equals("vddownloadsinfos"))
+                                else if (nv.ToString().ToLower().Equals("vddownloadsinfos"))
                                 {
-                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["Name"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["Name"].ToString().Trim() + "\" , \"userdomain\": \"" + dataRow["Domain"].ToString().Trim() + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
+                                    string userInterest = GetUserInterestFromURL(dataRow["URL"].ToString().ToLower(), dataRow["Domain"].ToString().Trim(), keyvalues);
+                                    string userLanguage = GetUserLanguageFromURL(dataRow["URL"].ToString().ToLower(), "");
+                                    string userMarket = GetUserMarketFromCountry(dataRow["Country"].ToString(), db);
+
+                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["Name"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"market\": \"" + userMarket + "\" , \"firstname\": \"" + dataRow["Name"].ToString().Trim() + "\" , \"userdomain\": \"" + dataRow["Domain"].ToString().Trim() + "\" , \"interest1\": \"" + userInterest + "\" ,  \"url\": \"" + dataRow["URL"].ToString() + "\" , \"language\": \"" + userLanguage + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
                                 }
-                                else if (myTable.ToString().ToLower().Equals("newslettersubscription"))
+                                else if (nv.ToString().ToLower().Equals("newslettersubscription"))
                                 {
-                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FullName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["FullName"].ToString().Trim() + "\" , \"userdomain\": \"" + dataRow["Domain"].ToString().Trim() + "\" , \"language\": \"" + dataRow["Language"].ToString().Trim() + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
+                                    string userInterest = GetUserInterestFromURL(dataRow["URL"].ToString().ToLower(), dataRow["Domain"].ToString().Trim(), keyvalues);
+                                    string userLanguage = GetUserLanguageFromURL(dataRow["URL"].ToString().ToLower(), dataRow["Language"].ToString());
+                                    string userMarket = GetUserMarketFromCountry(dataRow["Country"].ToString(), db);
+
+                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FullName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"interest2\": \"" + userInterest + "\" , \"market\": \"" + userMarket + "\" , \"firstname\": \"" + dataRow["FullName"].ToString().Trim() + "\" , \"userdomain\": \"" + dataRow["Domain"].ToString().Trim() + "\" , \"language\": \"" + userLanguage + "\" , \"url\": \"" + dataRow["URL"].ToString() + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
                                 }
-                                else if (myTable.ToString().ToLower().Equals("dssfestivalfans"))
+                                else if (nv.ToString().ToLower().Equals("dssfestivalfans"))
                                 {
                                     jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FullName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["FullName"].ToString().Trim() + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
                                 }
@@ -175,7 +277,7 @@
                                     jsonStringList.Append("] }");
                                     CreateWebRequest(ref jsonStringList, ref html);
                                     jsonStringList.Clear();
-                                    jsonStringList.AppendLine("{\"ContactsLists\":[ { \"ListID\": " + Tables[myTable.ToString()] + ", \"action\": \"addnoforce\" } ], \"Contacts\":[ ");
+                                    jsonStringList.AppendLine("{\"ContactsLists\":[ { \"ListID\": " + nameValueCollection[nv.ToString()] + ", \"action\": \"addnoforce\" } ], \"Contacts\":[ ");
 
                                     html.AppendLine("<br /> Procceeding with Next Request<br />");
                                 }
@@ -206,7 +308,6 @@
             var webRequest = (HttpWebRequest)WebRequest.Create("https://api.mailjet.com/v3/REST/contact/managemanycontacts");
             webRequest.Method = "POST";
             webRequest.ContentType = "application/json";
-            //webRequest.Headers.Add("Authorization", "Basic provide your key here");
             webRequest.Timeout = 500000;
 
             //https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class
@@ -250,31 +351,6 @@
             }
         }
 
-        // Hash an input string and return the hash as
-        // a 32 character hexadecimal string.
-        static string CalculateMD5Hash(string input)
-        {
-            // Create a new instance of the MD5CryptoServiceProvider object.
-            MD5CryptoServiceProvider md5Hasher = new MD5CryptoServiceProvider();
-
-            // Convert the input string to a byte array and compute the hash.
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(input));
-
-            // Create a new Stringbuilder to collect the bytes
-            // and create a string.
-            StringBuilder sBuilder = new StringBuilder();
-
-            // Loop through each byte of the hashed data 
-            // and format each one as a hexadecimal string.
-            for (int i = 0; i < data.Length; i++)
-            {
-                sBuilder.Append(data[i].ToString("x2"));
-            }
-
-            // Return the hexadecimal string.
-            return sBuilder.ToString();
-        }
-
         public static string Serialize<T>(T obj)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
@@ -303,9 +379,166 @@
             }
             catch (Exception ex)
             {
-                //Sitecore.Diagnostics.Log.Error("There is an error in GetDataTable", this);
+                //Sitecore.Diagnostics.Log.Error("There is an error in GetDataTable", ex, this);
             }
             return genericTable;
+        }
+
+        private string GetUserInterestFromURL(string url, string domain, Dictionary<string, string> dict)
+        {
+            url = url.ToLower();
+
+            string userInterset = string.Empty;
+
+            if (domain.Equals("Press Download"))
+            {
+                userInterset = "Press Releases";
+            }
+            else if (domain.Equals("InteractiveMap"))
+            {
+                userInterset = "Map Of Dubai";
+            }
+            else if (domain.Equals("DC APP"))
+            {
+                userInterset = "DC APP";
+            }
+
+            if (string.IsNullOrEmpty(userInterset))
+            {
+
+                foreach (var key in dict)
+                {
+                    if (url.Contains(key.Key))
+                    {
+                        userInterset = key.Value;
+                        break;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(userInterset))
+                {
+                    if (url.Contains("/itineraries") || url.Contains("/travel-planning"))
+                    {
+                        userInterset = "Travel Planning";
+                    }
+                }
+
+                if (string.IsNullOrEmpty(userInterset))
+                {
+                    userInterset = "Generic";
+                }
+            }
+
+            return userInterset;
+        }
+
+        private string GetUserLanguageFromURL(string url, string language, bool isUser = false)
+        {
+            if (string.IsNullOrWhiteSpace(language) && string.IsNullOrWhiteSpace(url))
+            {
+                return "en";
+            }
+
+            if (!string.IsNullOrWhiteSpace(language) && language.Length > 2)
+            {
+                if (language.ToLower().Contains("arabic"))
+                    return "ar";
+                else if (language.ToLower().Contains("russian"))
+                    return "ru";
+                else if (language.ToLower().Contains("italian"))
+                    return "it";
+                else if (language.ToLower().Contains("french"))
+                    return "fr";
+                else if (language.ToLower().Contains("spanish"))
+                    return "es";
+                else if (language.ToLower().Contains("chinese"))
+                    return "zh-cn";
+                else if (language.ToLower().Contains("polish"))
+                    return "pl";
+                else if (language.ToLower().Contains("german"))
+                    return "de";
+                else if (language.ToLower().Contains("azerbaijani") || language.ToLower().Contains("azeri"))
+                    return "az";
+                else if (language.ToLower().Contains("portuguese"))
+                    return "pt";
+                else if (language.ToLower().Contains("indonesian"))
+                    return "id";
+                else if (language.ToLower().Contains("dutch"))
+                    return "nl";
+                else if (language.ToLower().Contains("swedish"))
+                    return "sv";
+                else if (language.ToLower().Contains("portuguese"))
+                    return "pt";
+                else if (language.ToLower().Contains("japanese"))
+                    return "ja";
+                else if (language.ToLower().Contains("korean"))
+                    return "ko";
+                else if (language.ToLower().Contains("ukrainian"))
+                    return "uk";
+                else if (language.ToLower().Contains("czech"))
+                    return "cs";
+                else if (language.ToLower().Contains("cantonese"))
+                    return "hk";
+                else if (language.ToLower().Contains("danish"))
+                    return "da";
+                else if (language.ToLower().Contains("hungarian"))
+                    return "hu";
+                else if (language.ToLower().Contains("norwegian"))
+                    return "no";
+                else if (language.ToLower().Contains("finnish"))
+                    return "fi";
+                else
+                    return "en";
+            }
+            else
+            {
+                if (!string.IsNullOrWhiteSpace(url))
+                {
+                    var splittedURL = url.Split('/');
+                    if (splittedURL != null && splittedURL.Count() > 1)
+                    {
+                        if (splittedURL[1].Length >= 2)
+                        {
+                            return splittedURL[1].Substring(0, 2).ToLower();
+                        }
+                        else
+                        {
+                            return "en";
+                        }
+                    }
+                    else
+                    {
+                        return "en";
+                    }
+                }
+                else return "en";
+            }
+        }
+
+        private string GetUserMarketFromCountry(string usercountry, Database db)
+        {
+            string userMarket = "Anonymous";
+
+            if (string.IsNullOrWhiteSpace(usercountry) || usercountry.Length > 2)
+            {
+                return userMarket;
+            }
+
+            var marketItem = db.GetItem("{29F516DA-C1D6-4E34-97E1-AFAD25C93A45}");
+
+            string _urlParamsToParse = marketItem["Countries"];
+            NameValueCollection nameValueCollection = Sitecore.Web.WebUtil.ParseUrlParameters(_urlParamsToParse);
+
+            foreach (string nv in nameValueCollection)
+            {
+                if (nv.Equals(usercountry))
+                {
+                    userMarket = nameValueCollection[nv];
+                    break;
+                }
+            }
+
+            return userMarket;
         }
 
         public class users
