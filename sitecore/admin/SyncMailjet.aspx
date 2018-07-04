@@ -244,7 +244,12 @@
                                 {
                                     isLastRecordForRequest = true;
                                 }
-                                if (nv.ToString().ToLower().Equals("users"))
+
+                                if (nv.ToString().ToLower().Equals("hiddengemlikes"))
+                                {
+                                    jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["EmailId"].ToString().Trim() + "\", \"Properties\": { \"userdomain\": \"" + dataRow["Domain"].ToString().Trim() + "\" , \"interest2\": \"Dining\" } },");
+                                }
+                                else if (nv.ToString().ToLower().Equals("users"))
                                 {
                                     string userLanguage = GetUserLanguageFromURL("", dataRow["Language"].ToString().ToLower(), true);
                                     jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FirstName"].ToString().Trim() + " " + dataRow["LastName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["FirstName"].ToString().Trim() + "\", \"lastname\": \"" + dataRow["LastName"].ToString().Trim() + "\" , \"phone\": \"" + dataRow["PhoneNumber"].ToString().Trim() + "\", \"phonecountrycode\": \"" + dataRow["CountryCode"].ToString().Trim() + "\" , \"language\": \"" + userLanguage + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
@@ -269,6 +274,7 @@
                                 {
                                     jsonStringList.AppendLine("{ \"Email\": \"" + dataRow["Email"].ToString().Trim() + "\", \"Name\": \"" + dataRow["FullName"].ToString().Trim() + "\", \"Properties\": { \"country\": \"" + dataRow["Country"].ToString().Trim() + "\", \"firstname\": \"" + dataRow["FullName"].ToString().Trim() + "\" , \"createddate\": \"" + dataRow["CreatedDate"].ToString().Trim() + "\" } },");
                                 }
+                                
 
                                 if (isLastRecordForRequest)
                                 {
@@ -286,6 +292,7 @@
                             {
                                 //do nothing
                                 html.AppendLine(ex.StackTrace.ToString());
+                                Sitecore.Diagnostics.Log.Info("Something wrong: " + ex.StackTrace, this);
                             }
                         }
                     }
@@ -297,6 +304,7 @@
 
             // Write result.
             html.AppendLine("<br/> <br/> <br/> Time elapsed: " + stopwatch.Elapsed);
+            Sitecore.Diagnostics.Log.Info("Sync Mailjet Time elapsed: " + stopwatch.Elapsed, this);
 
             lblSummary.Text = html.ToString();
 
@@ -308,6 +316,7 @@
             var webRequest = (HttpWebRequest)WebRequest.Create("https://api.mailjet.com/v3/REST/contact/managemanycontacts");
             webRequest.Method = "POST";
             webRequest.ContentType = "application/json";
+            webRequest.Headers.Add("Authorization", "Basic Z");
             webRequest.Timeout = 500000;
 
             //https://docs.microsoft.com/en-us/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class
@@ -347,6 +356,8 @@
                 }
 
                 html.Append("<br />Json String Error: " + jsonStringList.ToString().Trim() + "<br />");
+
+                Sitecore.Diagnostics.Log.Info("Something wrong in request: " + ex.StackTrace, this);
 
             }
         }
