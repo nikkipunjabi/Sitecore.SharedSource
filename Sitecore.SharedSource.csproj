@@ -110,6 +110,7 @@
     <Content Include="GenericReport.aspx" />
     <Content Include="BulkLanguageReport.aspx" />
     <Content Include="GetFieldValue.aspx" />
+    <Content Include="sitecore\admin\DeleteTableData.aspx" />
     <Content Include="GetUpdateData.aspx" />
     <Content Include="images\background.jpg" />
     <Content Include="js\jquery-2.1.1.min.js" />

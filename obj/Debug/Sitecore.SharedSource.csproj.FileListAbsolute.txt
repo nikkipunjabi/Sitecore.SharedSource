@@ -98,3 +98,10 @@ C:\Development\SharedSource\obj\Debug\Sitecore.SharedSource.csproj.CoreCompileIn
 C:\Development\SharedSource\obj\Debug\Sitecore.SharedSource.csproj.CopyComplete
 C:\Development\SharedSource\obj\Debug\Sitecore.SharedSource.dll
 C:\Development\SharedSource\obj\Debug\Sitecore.SharedSource.pdb
+D:\Visit Dubai\Development\SharedSource\bin\Sitecore.SharedSource.dll
+D:\Visit Dubai\Development\SharedSource\bin\Sitecore.SharedSource.pdb
+D:\Visit Dubai\Development\SharedSource\obj\Debug\Sitecore.SharedSource.csprojResolveAssemblyReference.cache
+D:\Visit Dubai\Development\SharedSource\obj\Debug\Sitecore.SharedSource.csproj.CoreCompileInputs.cache
+D:\Visit Dubai\Development\SharedSource\obj\Debug\Sitecore.SharedSource.csproj.CopyComplete
+D:\Visit Dubai\Development\SharedSource\obj\Debug\Sitecore.SharedSource.dll
+D:\Visit Dubai\Development\SharedSource\obj\Debug\Sitecore.SharedSource.pdb

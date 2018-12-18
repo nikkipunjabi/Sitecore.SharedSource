@@ -6,11 +6,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\inetpub\wwwroot\sc7\website</_PublishTargetUrl>
+    <_PublishTargetUrl>D:\inetpub\wwwroot\Website</_PublishTargetUrl>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Automation-Dashboard.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="bin/ComponentArt.Web.UI.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -37,22 +37,22 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/10/2016 16:38:54</publishTime>
     </File>
     <File Include="bin/Sitecore.Buckets.Client.dll">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="bin/Sitecore.Buckets.dll">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="bin/Sitecore.Client.dll">
       <publishTime>03/10/2016 16:38:54</publishTime>
     </File>
     <File Include="bin/Sitecore.ContentSearch.dll">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="bin/Sitecore.ContentSearch.Linq.dll">
       <publishTime>03/10/2016 16:38:54</publishTime>
     </File>
     <File Include="bin/Sitecore.Kernel.dll">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="bin/Sitecore.Logging.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -61,10 +61,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="bin/Sitecore.SharedSource.dll">
-      <publishTime>02/09/2017 14:02:35</publishTime>
+      <publishTime>12/18/2018 10:48:48</publishTime>
     </File>
     <File Include="bin/Sitecore.SharedSource.pdb">
-      <publishTime>02/09/2017 14:02:35</publishTime>
+      <publishTime>12/18/2018 10:48:48</publishTime>
     </File>
     <File Include="bin/Sitecore.Zip.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -84,77 +84,161 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/Telerik.Web.UI.dll">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
+    <File Include="bootstrap/css/bootstrap-theme.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/css/bootstrap-theme.css.map">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/css/bootstrap-theme.min.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/css/bootstrap.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/css/bootstrap.css.map">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/css/bootstrap.min.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/js/bootstrap.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/js/bootstrap.min.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="bootstrap/js/npm.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
     <File Include="BulkAddSublayout.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkDatasourceUpdate.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkDelete.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkLanguageReport.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkMediaExport.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkMediaImport.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkPublish-cn.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkPublish.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkRemovePersonalizationRules.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkTemplateChange.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="BulkUpdate.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
+    </File>
+    <File Include="css/animate.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="css/font-awesome.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="css/font-awesome.min.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="css/style.css">
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="DeleteMultipleItems.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
+    </File>
+    <File Include="DeleteTableData.aspx">
+      <publishTime>12/18/2018 10:48:03</publishTime>
     </File>
     <File Include="EventReport.aspx">
       <publishTime>12/06/2016 11:41:53</publishTime>
     </File>
     <File Include="ExportItem.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="FieldCopier-Language.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="FieldCopier.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.eot">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.svg">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.ttf">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="fonts/fontawesome-webfont.woff">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="fonts/FontAwesome.otf">
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="GenericReport.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="GetFieldReport.aspx">
       <publishTime>02/05/2017 13:52:30</publishTime>
     </File>
     <File Include="GetFieldValue.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="GetKeywordReferenceItems.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="GetReferenceItems.aspx">
       <publishTime>01/01/0001 00:00:00</publishTime>
     </File>
     <File Include="GetUpdateData.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
+    </File>
+    <File Include="images/background.jpg">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="js/jquery-2.1.1.min.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="js/jquery.appear.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="js/modernizr.custom.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
+    </File>
+    <File Include="js/script.js">
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="LanguageReport.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="LanguageReportV2.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="LiveEventReport.aspx">
       <publishTime>01/01/0001 00:00:00</publishTime>
@@ -163,37 +247,40 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>02/05/2017 15:06:17</publishTime>
     </File>
     <File Include="PageCount.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="PagesUpdated.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
+    </File>
+    <File Include="sitecore/admin/DeleteTableData.aspx">
+      <publishTime>12/18/2018 13:24:40</publishTime>
     </File>
     <File Include="sitecore/admin/SyncMailchimp.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="sitecore/admin/SyncMailjet.aspx">
-      <publishTime>07/04/2018 16:50:43</publishTime>
+      <publishTime>12/18/2018 10:21:05</publishTime>
     </File>
     <File Include="TempUpdate.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="Test.aspx">
       <publishTime>01/12/2017 14:12:33</publishTime>
     </File>
     <File Include="UnlockItem.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="UnreferencedMediaItems.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="UpdateFieldValue.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="UserReport.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
     <File Include="WebForm1.aspx">
-      <publishTime>01/01/0001 00:00:00</publishTime>
+      <publishTime>12/18/2018 10:21:04</publishTime>
     </File>
   </ItemGroup>
 </Project>
